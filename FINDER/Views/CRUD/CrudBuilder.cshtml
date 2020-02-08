@@ -1,0 +1,41 @@
+﻿
+@model DataLayer.Usuario
+
+    <form method="post">
+
+        <label> Nombre </label>
+        <div>
+            <input type="text" name="TxtNombre" value="" />
+        </div>
+
+        <label> Fecha de Nacimiento </label>
+        <div>
+            <input type="date" name="TxtFecha" value="" />
+        </div>
+
+        <label> Localización </label>
+        <div>
+            <input type="text" name="TxtLocalizacion" value="" />
+        </div>
+
+        <label> Patrimonio </label>
+        <div>
+            <input type="number" name="TxtPatrimonio" value="" />
+        </div>
+
+        <label> Genero </label>
+        <div>
+
+            Masculino <input type="radio" name="RBMasculino" value="M" />
+            Femenino <input type="radio" name="RBFemenino" value="F" />
+        </div>
+
+        <label> Bio </label>
+        <div>
+            <textarea name="TxtBio" rows="5" cols="33"></textarea>
+        </div>
+        <hr />
+
+        <input type="submit" class="btn btn-danger" value="Submit" accesskey="none"/>
+
+    </form>
