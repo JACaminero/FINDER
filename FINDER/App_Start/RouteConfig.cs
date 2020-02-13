@@ -24,6 +24,12 @@ namespace FINDER
                 defaults: new { controller = "CRUD", action = "CrudBuilder", id = UrlParameter.Optional }
             );
 
+            routes.MapRoute(
+                name: "Update",
+                url: "{controller}/{action}",
+                defaults: new { controller = "CRUD", action = "Update"}
+                );
+
         }
     }
 }

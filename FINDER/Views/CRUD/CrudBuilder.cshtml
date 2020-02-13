@@ -1,41 +1,46 @@
 ﻿
 @model DataLayer.Usuario
 
-    <form method="post">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ModidyIndex</title>
+</head>
 
-        <label> Nombre </label>
-        <div>
-            <input type="text" name="TxtNombre" value="" />
-        </div>
+<form method="post">
 
-        <label> Fecha de Nacimiento </label>
-        <div>
-            <input type="date" name="TxtFecha" value="" />
-        </div>
+    <label> Nombre </label>
+    <div>
+        <input type="text" name="TxtNombre" value="" />
+    </div>
 
-        <label> Localización </label>
-        <div>
-            <input type="text" name="TxtLocalizacion" value="" />
-        </div>
+    <label> Fecha de Nacimiento </label>
+    <div>
+        <input type="date" name="TxtFecha" value="" />
+    </div>
 
-        <label> Patrimonio </label>
-        <div>
-            <input type="number" name="TxtPatrimonio" value="" />
-        </div>
+    <label> Localización </label>
+    <div>
+        <input type="text" name="TxtLocalizacion" value="" />
+    </div>
 
-        <label> Genero </label>
-        <div>
+    <label> Patrimonio </label>
+    <div>
+        <input type="number" name="TxtPatrimonio" value="" />
+    </div>
 
-            Masculino <input type="radio" name="RBMasculino" value="M" />
-            Femenino <input type="radio" name="RBFemenino" value="F" />
-        </div>
+    <label> Genero </label>
+    <div>
 
-        <label> Bio </label>
-        <div>
-            <textarea name="TxtBio" rows="5" cols="33"></textarea>
-        </div>
-        <hr />
+        Masculino <input type="radio" name="RBMasculino" value="M" />
+        Femenino <input type="radio" name="RBFemenino" value="F" />
+    </div>
 
-        <input type="submit" class="btn btn-danger" value="Submit" accesskey="none"/>
+    <label> Bio </label>
+    <div>
+        <textarea name="TxtBio" rows="5" cols="33"></textarea>
+    </div>
+    <hr />
 
-    </form>
+    <input type="submit" class="btn btn-danger" value="Submit" accesskey="none" />
+
+</form>
