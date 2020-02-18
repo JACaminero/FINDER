@@ -4,14 +4,17 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DataLayer;
-using System.Configuration;
-using System.Data.SqlClient;
+using FluentValidation.Results;
+using FINDER.Controllers;
+using FluentValidation.Mvc;
 
 namespace FINDER.Controllers
 {
     public class CRUDController : Controller
     {
         // GET: CRUD
+        public static BusinessUsuario businessUsuario = new BusinessUsuario();
+
 
         public ActionResult CrudBuilder()
         {
@@ -19,20 +22,20 @@ namespace FINDER.Controllers
             return View(usuario);
         }
 
-        private static CrudBuilder crud = new CrudBuilder();
         [HttpPost]
-        public ActionResult CrudBuilder(Usuario usuario, FormCollection frm)
+        
+        public ActionResult CrudBuilder([CustomizeValidator(RuleSet = "Insert")] Usuario usuario)
         {
-            usuario.Nombre = Request.Form["TxtNombre"];
-            usuario.FechaNacimiento = Convert.ToDateTime(Request.Form["TxtFecha"]);
-            usuario.Localizacion = Request.Form["TxtLocalizacion"];
-            usuario.Patrimonio = Convert.ToInt32(Request.Form["TxtPatrimonio"]);
-            //HtmlElement rbelement = ;
-            //usuario.Genero = Convert.ToChar(Request.Form["RBMasculino"]);
-            //usuario.Genero = Convert.ToChar(Request.Form["RBFemenino"]);
-            usuario.Bio = Request.Form["TxtBio"];
+            UsuarioValidator usuarioValidator = new UsuarioValidator();
+            ValidationResult result = usuarioValidator.Validate(usuario);
+            if (!ModelState.IsValid)
+            {
+                //result.AddToModelState(ModelState, null);
+                return View("CrudBuilder");
+            }
 
-            crud.Insert(usuario);
+            businessUsuario.Insert(usuario);
+            
             return RedirectToAction("CrudBuilder");
         }
 
@@ -40,5 +43,27 @@ namespace FINDER.Controllers
         {
             return View(new Usuario());
         }
+
+        [HttpPost]
+        public ActionResult SelectByID([CustomizeValidator(RuleSet="GetByID")]Usuario userID)
+        {
+            Usuario usuario = businessUsuario.GetWithId(userID.ID);
+            UsuarioValidator usuarioValidator = new UsuarioValidator();
+            ValidationResult result = usuarioValidator.Validate(usuario);
+
+            if (!ModelState.IsValid)
+            {
+                return View("Update", userID);
+            }
+
+            return View("Update", usuario);
+        }
+
+        public ActionResult SelectAll()
+        {
+            List<Usuario> listUsuario = businessUsuario.SelectAll();
+            return View(listUsuario);
+        }
+
     }
 }

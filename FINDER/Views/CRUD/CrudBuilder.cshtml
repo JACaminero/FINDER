@@ -1,46 +1,63 @@
 ﻿
 @model DataLayer.Usuario
 
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>ModidyIndex</title>
-</head>
-
-<form method="post">
-
+@using (Html.BeginForm("CrudBuilder", "CRUD"))
+{
     <label> Nombre </label>
     <div>
-        <input type="text" name="TxtNombre" value="" />
+        @Html.TextBoxFor(m => m.Nombre, new { type = "text" })
+        <br />
+        @Html.ValidationMessage("Nombre", new { @style="color: red; font-weight: 400" })
+
+        @*@Html.ValidationMessageFor(m => m.Nombre)*@
+        @*<input type="text" name="TxtNombre" value="" />*@
     </div>
 
     <label> Fecha de Nacimiento </label>
     <div>
-        <input type="date" name="TxtFecha" value="" />
+        @Html.TextBoxFor(m => m.FechaNacimiento, new { type = "date" })
+        <br />
+        @Html.ValidationMessage("FechaNacimiento", new { @style="color: red; font-weight: 400" })
+
+        @*<input type="date" name="TxtFecha" value="" />*@
     </div>
 
     <label> Localización </label>
     <div>
-        <input type="text" name="TxtLocalizacion" value="" />
+        @Html.TextBoxFor(m => m.Localizacion, new { type = "text" })
+        <br />
+        @Html.ValidationMessage("Localizacion", new { @style="color: red; font-weight: 400" })
+
+        @*<input type="text" name="TxtLocalizacion" value="" />*@
     </div>
 
     <label> Patrimonio </label>
     <div>
-        <input type="number" name="TxtPatrimonio" value="" />
+        @Html.TextBoxFor(m => m.Patrimonio, new { type = "number" })
+        <br />
+        @Html.ValidationMessage("Patrimonio", new { @style="color: red; font-weight: 400" })
+        @*<input type="number" name="TxtPatrimonio" value="" />*@
     </div>
 
-    <label> Genero </label>
-    <div>
-
-        Masculino <input type="radio" name="RBMasculino" value="M" />
-        Femenino <input type="radio" name="RBFemenino" value="F" />
-    </div>
-
+    <label> Sexo </label>
+    <br />
+    @*<label>
+        Macho
+        @Html.RadioButtonFor(m => m.Sexo, 'M')
+    </label>
+    <label>
+        Hembra
+        @Html.RadioButtonFor(m => m.Sexo, 'F')
+    </label>*@
+    <br />
     <label> Bio </label>
     <div>
-        <textarea name="TxtBio" rows="5" cols="33"></textarea>
+        @Html.TextAreaFor(m => m.Bio, new { rows = "5", cols = "33"})
+        <br />
+        @Html.ValidationMessage("Bio", new { @style="color: red; font-weight: 400" })
+
     </div>
-    <hr />
 
-    <input type="submit" class="btn btn-danger" value="Submit" accesskey="none" />
-
-</form>
+    <input type="submit" class="btn btn-danger" value="Submit" accesskey="none"
+           style="font-size:24px" />
+}

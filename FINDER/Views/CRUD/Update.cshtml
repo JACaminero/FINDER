@@ -1,51 +1,76 @@
-﻿<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>UpdateBuilder</title>
-</head>
+﻿@model DataLayer.Usuario
 
-<form method="post">
-    <h3>UPDATE OPERATIONS</h3>
-    <fieldset class="active">
 
-        <label > Who is you modifying bro? </label>
-        <input type="text" name="TxtQuery" value="" />
-        <hr class="alert-danger">
+@using (Html.BeginForm("SelectByID", "CRUD", 1))
+ {
+    <fieldset class="container-fluid">
+        <legend> Who is you modifying ID bro? </legend>
+        @Html.TextBoxFor(m => m.ID, new { type = "number" })
+        <br />
+        @Html.ValidationMessage("ID", new { @style = "color: red; font-weight: 400" })
+        <br />
+        <input type="submit" class="danger" name="SubmitQuery" value="Search">
+        
+    </fieldset>
+ }
+
+<hr class="danger"/>
+@using (Html.BeginForm("SelectByID", "CRUD", 1))
+ {
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">UPDATE OPERATIONS</legend>
 
         <label> Nombre </label>
-        <div>
-            <input type="text" name="TxtNombre" value="" />
+        <div class="control-group">
+            @Html.TextBoxFor(m => m.Nombre, new { Value = @Model.Nombre })
+            @*<input type="text" name="TxtNombre" value=@Model.Nombre />*@
         </div>
 
         <label> Fecha de Nacimiento </label>
         <div>
-            <input type="date" name="TxtFecha" value="" />
+            @Html.TextBoxFor(m => m.FechaNacimiento, new { type = "date", Value = @Model.FechaNacimiento })
+            @*<input type="date" name="TxtFecha" value="@Model.FechaNacimiento" />*@
         </div>
 
         <label> Localización </label>
         <div>
-            <input type="text" name="TxtLocalizacion" value="" />
+            @Html.TextBoxFor(m => m.Localizacion, new { Value = @Model.Localizacion })
+            @*<input type="text" name="TxtLocalizacion" value="@Model.Localizacion" />*@
         </div>
 
         <label> Patrimonio </label>
         <div>
-            <input type="number" name="TxtPatrimonio" value="" />
+            @Html.TextBoxFor(m => m.Patrimonio, new { type = "number", Value = @Model.Patrimonio })
+            @*<input type="number" name="TxtPatrimonio" value="@Model.Patrimonio" />*@
         </div>
 
-        <label> Genero </label>
+        <label> Sexo </label>
         <div>
+            @*@switch (Model.Sexo)
+            {
+                case 'M':
+                    <label style="font-weight:100">Macho  @Html.RadioButton("RBSex", "Macho", true)</label>
+                    <label style="font-weight:100">Hembra @Html.RadioButton("RBSex", "Hembra")</label>
+                    break;
+                case 'F':
+                    <label style="font-weight:100">Macho  @Html.RadioButton("RBSex", "Macho")</label>
+                    <label style="font-weight:100">Hembra @Html.RadioButton("RBSex", "Hembra", true)</label>
+                    break;
+                default:
+                    <label style="font-weight:100">Macho  @Html.RadioButton("RBSex", "Macho")</label>
+                    <label style="font-weight:100">Hembra @Html.RadioButton("RBSex", "Hembra") </label>
+                    break;
+            }*@
 
-            Masculino <input type="radio" name="RBMasculino" value="M" />
-            Femenino <input type="radio" name="RBFemenino" value="F" />
         </div>
 
         <label> Bio </label>
         <div>
-            <textarea name="TxtBio" rows="5" cols="33"></textarea>
+            @Html.TextAreaFor(m => m.Bio, new { rows = "5", cols = "33" })
+            @*<textarea name="TxtBio" rows="5" cols="33"></textarea>*@
         </div>
         <hr />
 
         <input type="submit" class="btn btn-danger" value="Submit" accesskey="none" />
-
     </fieldset>
-</form>
-
+ }

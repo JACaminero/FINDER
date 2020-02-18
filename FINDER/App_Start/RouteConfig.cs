@@ -27,9 +27,14 @@ namespace FINDER
             routes.MapRoute(
                 name: "Update",
                 url: "{controller}/{action}",
-                defaults: new { controller = "CRUD", action = "Update"}
+                defaults: new { controller = "CRUD", action = "Update", id = UrlParameter.Optional }
                 );
 
+            routes.MapRoute(
+                name: "SelectAll",
+                url: "{controller}/{action}",
+                defaults: new { controller = "CRUD", action = "SelectAll" }
+                );      
         }
     }
 }

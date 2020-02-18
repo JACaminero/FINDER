@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using FluentValidation.Mvc;
 
 namespace FINDER
 {
@@ -15,6 +16,8 @@ namespace FINDER
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            FluentValidationModelValidatorProvider.Configure();
+
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }
