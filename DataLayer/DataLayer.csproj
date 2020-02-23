@@ -77,6 +77,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\BusinessFetiche.cs" />
     <Compile Include="Business\BusinessSexo.cs" />
     <Compile Include="Data\Atraccion.cs" />
     <Compile Include="Business\BusinessUsuario.cs" />

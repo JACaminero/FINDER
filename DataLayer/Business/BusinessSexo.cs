@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace DataLayer.Business
 {
-    class BusinessSexo
+    public class BusinessSexo
     {
         /// <summary>
         /// Gets algun sexo de la base de datos default, dado su id
@@ -18,9 +18,11 @@ namespace DataLayer.Business
         {
             SqlConnection con = ConnectionBuilder.GetDefaultConnection();
 
-            string sentence = "SELECT * FROM Sexo";
+            string sentence = "SELECT * FROM Sexo " +
+                              "WHERE ID_Sexo = @idSexo";
 
             SqlCommand command = new SqlCommand(sentence, con);
+            command.Parameters.AddWithValue("@idSexo", idSexo);
 
             con.Open();
             SqlDataReader reader = command.ExecuteReader();

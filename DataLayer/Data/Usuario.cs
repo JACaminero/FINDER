@@ -20,45 +20,34 @@ namespace DataLayer
         public Sexo Sexo { get; set; }
         public Atraccion Atraccion { get; set; }
         public byte[] Imagen { get; set; }
+
+        public Usuario() { }
+        public Usuario(int sexoid) 
+        {
+            Sexo = new Sexo(0);
+        }
     }
 
     public class UsuarioValidator : AbstractValidator<Usuario>
     {
         public UsuarioValidator()
         {
-            RuleFor(usuario => usuario.ID).NotEmpty().WithMessage("Inserte un ID");
             RuleFor(u => u.Nombre)
                 .NotEmpty().WithMessage("Especifique un nombre")
                 .Length(1, 60).WithMessage("Problema de Overflow");
 
             RuleFor(u => u.FechaNacimiento).NotEmpty()
-                .WithMessage("Especifique una fecha de nacimiento").Must(BeAValidDate)
-                .WithMessage("Especifique una fecha de nacimiento valida");
-            
+                .WithMessage("Especifique una fecha de nacimiento valida").Must(BeAValidDate)
+                .WithMessage("Especifique una fecha de nacimiento");
+
             RuleFor(u => u.Sexo).NotEmpty().WithMessage("Especifique un Genero");
             RuleFor(u => u.Localizacion).NotEmpty().WithMessage("Especifique una localizacion");
             RuleFor(u => u.Patrimonio).NotEmpty().WithMessage("Especifique un patrimonio");
 
-
-            RuleSet("Insert", () =>
-            {
-                RuleFor(u => u.Nombre)
-                .NotEmpty().WithMessage("Especifique un nombre")
-                .Length(0, 60).WithMessage("problema de Overflow");
-
-                RuleFor(u => u.FechaNacimiento)
-                .NotEmpty().WithMessage("Especifique una fecha de nacimiento")
-                .Must(BeAValidDate).WithMessage("Especifique una fecha de nacimiento valida");
-
-                RuleFor(u => u.Sexo).NotEmpty().WithMessage("Especifique un Genero");
-                RuleFor(u => u.Localizacion).NotEmpty().WithMessage("Especifique una localizacion");
-                RuleFor(u => u.Patrimonio).NotEmpty().WithMessage("Especifique un patrimonio");
-            });
-
-
             RuleSet("GetByID", () =>
             {
-                RuleFor(m => m.ID).NotEmpty().WithMessage("Inserte un ID");
+                RuleFor(m => m.ID).NotEmpty().WithMessage("Inserte un ID")
+                .GreaterThan(0).WithMessage("El valor del id debe ser mayor que 0");
             });
         }
 

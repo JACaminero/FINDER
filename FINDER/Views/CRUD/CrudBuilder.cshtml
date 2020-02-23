@@ -1,63 +1,86 @@
 ﻿
 @model DataLayer.Usuario
 
-@using (Html.BeginForm("CrudBuilder", "CRUD"))
+@using (Html.BeginForm("CrudBuilder", "CRUD", 1))
 {
-    <label> Nombre </label>
-    <div>
-        @Html.TextBoxFor(m => m.Nombre, new { type = "text" })
+    <fieldset>
+        <legend class="block-title">
+            INSERT OPERATION
+        </legend>
+        <div>
+            <label>
+                Nombre
+                <br />
+                @Html.TextBoxFor(m => m.Nombre, new { type = "text" })
+                <br />
+                @Html.ValidationMessageFor(m => m.Nombre, "", new { @style = "color: red; font-weight: 400" })
+            </label>
+        </div>
+        <div>
+            <label>
+                Fecha de Nacimiento
+                <br />
+                @Html.TextBoxFor(m => m.FechaNacimiento, new { type = "date", Value = "2020-01-01" })
+                <br />
+                @*@Html.ValidationMessage("FechaNacimiento", new { @style = "color: red; font-weight: 400" })*@
+                @Html.ValidationMessageFor(m => m.FechaNacimiento, "", new { @style = "color: red; font-weight: 400" })
+
+                @*<input type="date" name="TxtFecha" value="" />*@
+            </label>
+        </div>
+        <label> Localización </label>
+        <div>
+            @Html.TextBoxFor(m => m.Localizacion, new { type = "text" })
+            <br />
+            @Html.ValidationMessageFor(m => m.Localizacion, "", new { @style = "color: red; font-weight: 400" })
+            @*<input type="text" name="TxtLocalizacion" value="" />*@
+        </div>
+
+        <label> Patrimonio </label>
+        <div>
+            @Html.TextBoxFor(m => m.Patrimonio, new { type = "number" })
+            <br />
+            @Html.ValidationMessageFor(m => m.Patrimonio, "", new { @style = "color: red; font-weight: 400" })
+            @*<input type="number" name="TxtPatrimonio" value="" />*@
+        </div>
+
+        <label> Sexo </label>
         <br />
-        @Html.ValidationMessage("Nombre", new { @style="color: red; font-weight: 400" })
-
-        @*@Html.ValidationMessageFor(m => m.Nombre)*@
-        @*<input type="text" name="TxtNombre" value="" />*@
-    </div>
-
-    <label> Fecha de Nacimiento </label>
-    <div>
-        @Html.TextBoxFor(m => m.FechaNacimiento, new { type = "date" })
+        <label>
+            Macho
+            @Html.RadioButtonFor(m => m.Sexo.ID_Sexo, 1)
+        </label>
+        <label>
+            Hembra
+            @Html.RadioButtonFor(m => m.Sexo.ID_Sexo, 2)
+        </label>
+        <label>
+            No-Binario
+            @Html.RadioButtonFor(m => m.Sexo.ID_Sexo, 3)
+        </label>
         <br />
-        @Html.ValidationMessage("FechaNacimiento", new { @style="color: red; font-weight: 400" })
+        <label> Bio </label>
+        <div>
+            @Html.TextAreaFor(m => m.Bio, new { rows = "5", cols = "33" })
+            <br />
+            @Html.ValidationMessageFor(m => m.Bio, "", new { @style = "color: red; font-weight: 400" })
+        </div>
 
-        @*<input type="date" name="TxtFecha" value="" />*@
-    </div>
+        <input type="submit" class="btn btn-danger" value="Submit" accesskey="none"
+               style="font-size:24px" />
 
-    <label> Localización </label>
-    <div>
-        @Html.TextBoxFor(m => m.Localizacion, new { type = "text" })
-        <br />
-        @Html.ValidationMessage("Localizacion", new { @style="color: red; font-weight: 400" })
 
-        @*<input type="text" name="TxtLocalizacion" value="" />*@
-    </div>
-
-    <label> Patrimonio </label>
-    <div>
-        @Html.TextBoxFor(m => m.Patrimonio, new { type = "number" })
-        <br />
-        @Html.ValidationMessage("Patrimonio", new { @style="color: red; font-weight: 400" })
-        @*<input type="number" name="TxtPatrimonio" value="" />*@
-    </div>
-
-    <label> Sexo </label>
-    <br />
-    @*<label>
-        Macho
-        @Html.RadioButtonFor(m => m.Sexo, 'M')
-    </label>
-    <label>
-        Hembra
-        @Html.RadioButtonFor(m => m.Sexo, 'F')
-    </label>*@
-    <br />
-    <label> Bio </label>
-    <div>
-        @Html.TextAreaFor(m => m.Bio, new { rows = "5", cols = "33"})
-        <br />
-        @Html.ValidationMessage("Bio", new { @style="color: red; font-weight: 400" })
-
-    </div>
-
-    <input type="submit" class="btn btn-danger" value="Submit" accesskey="none"
-           style="font-size:24px" />
+        @*@if (ViewData.ModelState.IsValid && TempData["Success"] != null)
+        {
+            <p style=" color:darkturquoise; font:400; font-size:large">
+                @TempData["Success"]
+            </p>
+        }*@
+        @if (ViewData.ModelState.IsValid && TempData["Success"] != null)
+        {
+            <script>
+                alert(@TempData["Success"])
+            </script>
+        }
+    </fieldset>
 }

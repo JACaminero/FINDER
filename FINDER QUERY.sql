@@ -13,7 +13,7 @@
 --CREATE TABLE Swipe(
 --ID_Interesado INT CONSTRAINT FKUsuarioInteresado FOREIGN KEY REFERENCES Usuario(ID_Usuario),
 --ID_Pareja INT CONSTRAINT FKUsuarioPareja FOREIGN KEY REFERENCES Usuario(ID_Usuario),
---CONSTRAINT PKSwipe PRIMARY KEY(ID_Interesado, ID_Pareja),
+--ID_Swipe INT CONSTRAINT PKSwipe PRIMARY KEY IDENTITY,
 --meGusta BIT,
 --SuperLike BIT
 --)
@@ -40,7 +40,13 @@
 --	CHECK (nivelConsentimiento = 'Alto' OR nivelConsentimiento = 'Medio' OR nivelConsentimiento = 'Bajo')
 --)
 
+CREATE TABLE ChatLog(
+ID_Chat INT CONSTRAINT PKChat PRIMARY KEY IDENTITY, 
+ID_Swipe INT CONSTRAINT FKChatSwipe FOREIGN KEY REFERENCES Swipe(ID_Swipe),
+chatInstance NVARCHAR(200)
 
+)
+--INSERT INTO Sexo VALUES ('Hombre'), ('Mujer'), ('No Binario')
 --INSERT INTO Atraccion VALUES ('Gay'), ('Heterosexual'), ('Lesbiana')
 --INSERT INTO Fetiche VALUES ('BDSM'), ('No Consensual'), ('Interracial'), ('Maduro'), ('Multiples Parejas')
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using DataLayer.Business;
 
 namespace DataLayer
 {
@@ -11,7 +12,6 @@ namespace DataLayer
     {
         public void Insert(Usuario usuario)
         {
-            
             string sentence = $"INSERT INTO [dbo].[Usuario] ([nombre], [fechaNacimiento], [bio], " +
                 $"[localizacion],[patrimonio], [ID_Sexo], [foto])" +
                 $"VALUES(@nombre, @fechaNacimiento, @bio, @localizacion, @patrimonio, @Sexo, null)";
@@ -24,7 +24,7 @@ namespace DataLayer
             command.Parameters.AddWithValue("@bio", usuario.Bio);
             command.Parameters.AddWithValue("@localizacion", usuario.Localizacion);
             command.Parameters.AddWithValue("@patrimonio", usuario.Patrimonio);
-            command.Parameters.AddWithValue("@Sexo", usuario.Sexo);
+            command.Parameters.AddWithValue("@Sexo", usuario.Sexo.ID_Sexo);
 
             con.Open();
             command.ExecuteNonQuery();
@@ -33,14 +33,23 @@ namespace DataLayer
 
         public void Delete(int id)
         {
-            return;
-        }
+            SqlConnection con = ConnectionBuilder.GetDefaultConnection();
+            string sentence = "DELETE FROM Usuario " +
+                                "WHERE ID_Usuario = @id";
+            
+            SqlCommand command = new SqlCommand(sentence, con);
+            command.Parameters.AddWithValue("@id", id);
 
+            con.Open();
+            command.ExecuteNonQuery();
+            con.Close();
+        }
+        
         public List<Usuario> SelectAll()
         {
             SqlConnection con = ConnectionBuilder.GetDefaultConnection();
             string sentence = "SELECT nombre, fechaNacimiento, " +
-                "bio, localizacion, patrimonio, ID_Sexo, foto " +
+                "bio, localizacion, patrimonio, ISNULL(ID_Sexo, 0), ID_Usuario, foto " +
                 "FROM Usuario";
 
             SqlCommand command = new SqlCommand(sentence, con);
@@ -56,7 +65,9 @@ namespace DataLayer
                 usuario.Bio = reader.GetValue(2).ToString();
                 usuario.Localizacion = reader.GetValue(3).ToString();
                 usuario.Patrimonio = Convert.ToDecimal(reader.GetValue(4));
-                //usuario.Sexo = Convert.ToChar(reader.GetValue(5));
+                int idSexo = reader.GetInt32(5);
+                usuario.Sexo = new Sexo(idSexo);
+                usuario.ID = reader.GetInt32(6);
 
                 listUser.Add(usuario);
             }
@@ -66,22 +77,23 @@ namespace DataLayer
             return listUser;
         }
 
-        public void Update(Usuario usuario)
+        public void Update(Usuario toUpdate)
         {
             SqlConnection con = ConnectionBuilder.GetDefaultConnection();
 
             string sentence = $"UPDATE Usuario " +
                 "SET nombre = @nombre, fechaNacimiento = @fecha, " +
-                "bio = @bio, localizacion = @localizacion, patrimonio = @patrimonio" +
+                "bio = @bio, localizacion = @localizacion, patrimonio = @patrimonio, ID_Sexo = @idSexo " +
                 "WHERE ID_Usuario = @id";
 
             SqlCommand command = new SqlCommand(sentence, con);
-            command.Parameters.AddWithValue("@nombre", usuario.Nombre);
-            command.Parameters.AddWithValue("@fechaNacimiento", usuario.FechaNacimiento);
-            command.Parameters.AddWithValue("@bio", usuario.Bio);
-            command.Parameters.AddWithValue("@localizacion", usuario.Localizacion);
-            command.Parameters.AddWithValue("@patrimonio", usuario.Patrimonio);
-            command.Parameters.AddWithValue("@id", usuario.ID);
+            command.Parameters.AddWithValue("@nombre", toUpdate.Nombre);
+            command.Parameters.AddWithValue("@fecha", toUpdate.FechaNacimiento);
+            command.Parameters.AddWithValue("@bio", toUpdate.Bio);
+            command.Parameters.AddWithValue("@localizacion", toUpdate.Localizacion);
+            command.Parameters.AddWithValue("@patrimonio", toUpdate.Patrimonio);
+            command.Parameters.AddWithValue("@idSexo", toUpdate.Sexo.ID_Sexo);
+            command.Parameters.AddWithValue("@id", toUpdate.ID);
 
             con.Open();
             command.ExecuteNonQuery();
@@ -92,7 +104,8 @@ namespace DataLayer
         {
             SqlConnection con = ConnectionBuilder.GetDefaultConnection();
 
-            string sentence = "SELECT * FROM Usuario " +
+            string sentence = "SELECT nombre, fechaNacimiento, " +
+                "bio, localizacion, patrimonio, ISNULL(ID_Sexo, 0), foto, ID_Usuario FROM Usuario " +
                               "WHERE ID_Usuario = @id";
 
             SqlCommand comm = new SqlCommand(sentence, con);
@@ -104,15 +117,19 @@ namespace DataLayer
 
             while (reader.Read())
             {
-                user.Nombre = reader.GetValue(1).ToString();
-                user.FechaNacimiento = reader.GetDateTime(2);
-                user.Bio = reader.GetValue(3).ToString();
-                user.Localizacion = reader.GetValue(4).ToString();
-                user.Patrimonio = Convert.ToDecimal(reader.GetValue(5));
-                //user.Sexo = Convert.ToChar(reader.GetValue(6));
+                user.Nombre = reader.GetValue(0).ToString();
+                user.FechaNacimiento = reader.GetDateTime(1);
+                user.Bio = reader.GetValue(2).ToString();
+                user.Localizacion = reader.GetValue(3).ToString();
+                user.Patrimonio = Convert.ToDecimal(reader.GetValue(4));
+                int idSexo = Convert.ToInt16(reader.GetValue(5));
+                user.Sexo = new Sexo(idSexo);
             }
+            user.ID = id;
+
             reader.Close();
             con.Close();
+
             return user;
         }
     }

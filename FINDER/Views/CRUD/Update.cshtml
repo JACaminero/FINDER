@@ -1,76 +1,96 @@
 ﻿@model DataLayer.Usuario
 
+    @using (Html.BeginForm("Update", "CRUD", 0))
+    {
+        <fieldset class="container-fluid">
+            <legend> Who is you modifying ID bro? </legend>
+            @Html.TextBoxFor(m => m.ID, new { type = "number", @Value = Model.ID })
+            <br />
+            @Html.ValidationMessageFor(m => m.ID, "", new { @style = "color: red; font-weight: 400" })
+            <br />
+            <input type="submit" class="btn btn-danger" value="Search" accesskey="none"
+                   style="font-size:24px" />
+        </fieldset>
+    }
 
-@using (Html.BeginForm("SelectByID", "CRUD", 1))
- {
-    <fieldset class="container-fluid">
-        <legend> Who is you modifying ID bro? </legend>
-        @Html.TextBoxFor(m => m.ID, new { type = "number" })
-        <br />
-        @Html.ValidationMessage("ID", new { @style = "color: red; font-weight: 400" })
-        <br />
-        <input type="submit" class="danger" name="SubmitQuery" value="Search">
-        
-    </fieldset>
- }
-
-<hr class="danger"/>
-@using (Html.BeginForm("SelectByID", "CRUD", 1))
- {
+<hr class="danger" />
+@using (Html.BeginForm("Update", "CRUD", 1))
+{
     <fieldset class="scheduler-border">
         <legend class="scheduler-border">UPDATE OPERATIONS</legend>
-
+        <label> @Html.TextBoxFor(m => m.ID, new { @Value = @Model.ID, @readonly = "readonly"})</label>
         <label> Nombre </label>
         <div class="control-group">
             @Html.TextBoxFor(m => m.Nombre, new { Value = @Model.Nombre })
+            @Html.ValidationMessageFor(m => m.Nombre, "", new { @style = "color: red; font-weight: 400" })
             @*<input type="text" name="TxtNombre" value=@Model.Nombre />*@
         </div>
 
         <label> Fecha de Nacimiento </label>
         <div>
             @Html.TextBoxFor(m => m.FechaNacimiento, new { type = "date", Value = @Model.FechaNacimiento })
+            @Html.ValidationMessageFor(m => m.FechaNacimiento, "", new { @style = "color: red; font-weight: 400" })
             @*<input type="date" name="TxtFecha" value="@Model.FechaNacimiento" />*@
         </div>
 
         <label> Localización </label>
         <div>
             @Html.TextBoxFor(m => m.Localizacion, new { Value = @Model.Localizacion })
+            @Html.ValidationMessageFor(m => m.Localizacion, "", new { @style = "color: red; font-weight: 400" })
             @*<input type="text" name="TxtLocalizacion" value="@Model.Localizacion" />*@
         </div>
 
         <label> Patrimonio </label>
         <div>
             @Html.TextBoxFor(m => m.Patrimonio, new { type = "number", Value = @Model.Patrimonio })
+            @Html.ValidationMessageFor(m => m.Patrimonio, "", new { @style = "color: red; font-weight: 400" })
             @*<input type="number" name="TxtPatrimonio" value="@Model.Patrimonio" />*@
         </div>
 
         <label> Sexo </label>
         <div>
-            @*@switch (Model.Sexo)
+            @switch (Model.Sexo.ID_Sexo)
             {
-                case 'M':
-                    <label style="font-weight:100">Macho  @Html.RadioButton("RBSex", "Macho", true)</label>
-                    <label style="font-weight:100">Hembra @Html.RadioButton("RBSex", "Hembra")</label>
+                case 1:
+                    <label style="font-weight:100">Macho      @Html.RadioButtonFor(m => m.Sexo.ID_Sexo, 1, true)</label>
+                    <label style="font-weight:100">Hembra     @Html.RadioButtonFor(m => m.Sexo.ID_Sexo, 2, false)</label>
+                    <label style="font-weight:100">No Binario @Html.RadioButtonFor(m => m.Sexo.ID_Sexo, 3, false)</label>
+                    @Html.ValidationMessageFor(m => m.Sexo, "")
                     break;
-                case 'F':
-                    <label style="font-weight:100">Macho  @Html.RadioButton("RBSex", "Macho")</label>
-                    <label style="font-weight:100">Hembra @Html.RadioButton("RBSex", "Hembra", true)</label>
+                case 2:
+                    <label style="font-weight:100">Macho      @Html.RadioButtonFor(m => m.Sexo.ID_Sexo, 1, false)</label>
+                    <label style="font-weight:100">Hembra     @Html.RadioButtonFor(m => m.Sexo.ID_Sexo, 2, true)</label>
+                    <label style="font-weight:100">No Binario @Html.RadioButtonFor(m => m.Sexo.ID_Sexo, 3, false)</label>
+                    @Html.ValidationMessageFor(m => m.Sexo, "")
+
+                    break;
+                case 3:
+                    <label style="font-weight:100">Macho      @Html.RadioButtonFor(m => m.Sexo.ID_Sexo, 1, false)</label>
+                    <label style="font-weight:100">Hembra     @Html.RadioButtonFor(m => m.Sexo.ID_Sexo, 2, false)</label>
+                    <label style="font-weight:100">No Binario @Html.RadioButtonFor(m => m.Sexo.ID_Sexo, 3, true)</label>
+                    @Html.ValidationMessageFor(m => m.Sexo, "")
                     break;
                 default:
-                    <label style="font-weight:100">Macho  @Html.RadioButton("RBSex", "Macho")</label>
-                    <label style="font-weight:100">Hembra @Html.RadioButton("RBSex", "Hembra") </label>
+                    <label style="font-weight:100">Macho      @Html.RadioButtonFor(m => m.Sexo.ID_Sexo, 1, false)</label>
+                    <label style="font-weight:100">Hembra     @Html.RadioButtonFor(m => m.Sexo.ID_Sexo, 2, false)</label>
+                    <label style="font-weight:100">No Binario @Html.RadioButtonFor(m => m.Sexo.ID_Sexo, 3, false)</label>
+                    @Html.ValidationMessageFor(m => m.Sexo, "", new { @style = "color: red; font-weight: 400" })
                     break;
-            }*@
+            }
 
         </div>
 
         <label> Bio </label>
         <div>
             @Html.TextAreaFor(m => m.Bio, new { rows = "5", cols = "33" })
+            @Html.ValidationMessageFor(m => m.Bio, "", new { @style = "color: red; font-weight: 400" })
+
             @*<textarea name="TxtBio" rows="5" cols="33"></textarea>*@
         </div>
         <hr />
 
-        <input type="submit" class="btn btn-danger" value="Submit" accesskey="none" />
+        <input type="submit" class="btn btn-danger" value="Submit" accesskey="none"
+               style="font-size:24px" />
+
     </fieldset>
- }
+}

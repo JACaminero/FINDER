@@ -23,8 +23,8 @@ namespace DataLayer
 
             Sexo sexo = businessSexo.GetByID(idSexo);
 
-            sexo.ID_Sexo = ID_Sexo;
-            sexo.NombreSexo = NombreSexo;
+            ID_Sexo = sexo.ID_Sexo;
+            NombreSexo = sexo.NombreSexo;
         }
 
     }

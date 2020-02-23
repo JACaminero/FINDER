@@ -8,9 +8,7 @@
     <title>SelectAll</title>
 </head>
 <body>
-    <p>
-        @Html.ActionLink("CrudBuilder", "CRUD")
-    </p>
+
     <table class="table">
         <tr>
             <th>
@@ -33,35 +31,41 @@
             </th>
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaNacimiento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Bio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Localizacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Patrimonio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sexo)
-            </td>
-            <td>
-                @Html.ActionLink("Update", "CRUD", new { id=item.ID }) |
-                @*@Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
-            </td>
-        </tr>
-    }
-    
-    </table>
+       
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaNacimiento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Localizacion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Patrimonio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sexo.NombreSexo)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Actualizar", "Update", item, null)
+
+                        @using (@Html.BeginForm("SelectAll", "CRUD", new { id = item.ID }))
+                        {
+                            <input type="submit" class="btn btn-danger" value="Eliminar" />
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
 </body>
 </html>
