@@ -43,6 +43,7 @@ namespace DataLayer
             RuleFor(u => u.Sexo).NotEmpty().WithMessage("Especifique un Genero");
             RuleFor(u => u.Localizacion).NotEmpty().WithMessage("Especifique una localizacion");
             RuleFor(u => u.Patrimonio).NotEmpty().WithMessage("Especifique un patrimonio");
+            RuleFor(u => u.Imagen).NotNull().WithMessage("Especifique una imagen");
 
             RuleSet("GetByID", () =>
             {

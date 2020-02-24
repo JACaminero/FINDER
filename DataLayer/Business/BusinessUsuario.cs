@@ -14,7 +14,7 @@ namespace DataLayer
         {
             string sentence = $"INSERT INTO [dbo].[Usuario] ([nombre], [fechaNacimiento], [bio], " +
                 $"[localizacion],[patrimonio], [ID_Sexo], [foto])" +
-                $"VALUES(@nombre, @fechaNacimiento, @bio, @localizacion, @patrimonio, @Sexo, null)";
+                $"VALUES(@nombre, @fechaNacimiento, @bio, @localizacion, @patrimonio, @Sexo, @foto)";
 
             SqlConnection con = ConnectionBuilder.GetDefaultConnection();
 
@@ -25,6 +25,7 @@ namespace DataLayer
             command.Parameters.AddWithValue("@localizacion", usuario.Localizacion);
             command.Parameters.AddWithValue("@patrimonio", usuario.Patrimonio);
             command.Parameters.AddWithValue("@Sexo", usuario.Sexo.ID_Sexo);
+            command.Parameters.AddWithValue("@foto", usuario.Imagen);
 
             con.Open();
             command.ExecuteNonQuery();
@@ -49,7 +50,7 @@ namespace DataLayer
         {
             SqlConnection con = ConnectionBuilder.GetDefaultConnection();
             string sentence = "SELECT nombre, fechaNacimiento, " +
-                "bio, localizacion, patrimonio, ISNULL(ID_Sexo, 0), ID_Usuario, foto " +
+                "bio, localizacion, patrimonio, ISNULL(ID_Sexo, 0), ID_Usuario, ISNULL(foto, 0x10)" +
                 "FROM Usuario";
 
             SqlCommand command = new SqlCommand(sentence, con);
@@ -68,6 +69,7 @@ namespace DataLayer
                 int idSexo = reader.GetInt32(5);
                 usuario.Sexo = new Sexo(idSexo);
                 usuario.ID = reader.GetInt32(6);
+                usuario.Imagen = (byte[])reader.GetValue(7);
 
                 listUser.Add(usuario);
             }
@@ -83,7 +85,7 @@ namespace DataLayer
 
             string sentence = $"UPDATE Usuario " +
                 "SET nombre = @nombre, fechaNacimiento = @fecha, " +
-                "bio = @bio, localizacion = @localizacion, patrimonio = @patrimonio, ID_Sexo = @idSexo " +
+                "bio = @bio, localizacion = @localizacion, patrimonio = @patrimonio, ID_Sexo = @idSexo, foto = @foto " +
                 "WHERE ID_Usuario = @id";
 
             SqlCommand command = new SqlCommand(sentence, con);
@@ -94,6 +96,7 @@ namespace DataLayer
             command.Parameters.AddWithValue("@patrimonio", toUpdate.Patrimonio);
             command.Parameters.AddWithValue("@idSexo", toUpdate.Sexo.ID_Sexo);
             command.Parameters.AddWithValue("@id", toUpdate.ID);
+            command.Parameters.AddWithValue("@foto", toUpdate.Imagen); 
 
             con.Open();
             command.ExecuteNonQuery();

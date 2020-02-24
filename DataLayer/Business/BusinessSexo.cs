@@ -38,5 +38,30 @@ namespace DataLayer.Business
 
             return sex;
         }
+
+        public List<Sexo> SelectAll()
+        {
+            SqlConnection con = ConnectionBuilder.GetDefaultConnection();
+            string sentence = "SELECT ID_Sexo, nombreSexo" +
+                " FROM Sexo";
+
+            SqlCommand command = new SqlCommand(sentence, con);
+
+            List<Sexo> listSexo = new List<Sexo>();
+            
+            con.Open();
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                Sexo sexo = new Sexo();
+                sexo.ID_Sexo = reader.GetInt32(0);
+                sexo.NombreSexo = reader.GetString(1);
+                listSexo.Add(sexo);
+            }
+            reader.Close();
+            con.Close();
+
+            return listSexo;
+        }
     }
 }

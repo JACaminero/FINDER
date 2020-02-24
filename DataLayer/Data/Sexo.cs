@@ -17,6 +17,10 @@ namespace DataLayer
         /// </summary>
         public Sexo() { }
         
+        /// <summary>
+        /// Gets las propiedades de un sexo dado su id de base de datos
+        /// </summary>
+        /// <param name="idSexo"> El id del sexo en la base de datos </param>
         public Sexo(int idSexo)
         {
             BusinessSexo businessSexo = new BusinessSexo();
